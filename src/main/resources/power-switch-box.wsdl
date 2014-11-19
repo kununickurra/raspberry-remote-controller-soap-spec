@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:powerswitch="http://service.iot.com/powerswitch"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:wsp="http://www.w3.org/ns/ws-policy" name="PowerSwitchBoxService"
+	targetNamespace="http://service.iot.com/powerswitch">
+	<wsdl:types>
+		<xs:schema>
+			<xs:import namespace="http://service.iot.com/powerswitch" schemaLocation="power-switch-box.xsd" />
+		</xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getAllPowerSwitchesResponse">
+    	<wsdl:part name="parameters"
+    		element="powerswitch:getAllPowerSwitchesResponse">
+    	</wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAllPowerSwitchesRequest">
+	</wsdl:message>
+    <wsdl:message name="setStateRequest">
+    	<wsdl:part name="parameters"
+    		element="powerswitch:setSwitchStateRequest">
+    	</wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="setStateResponse">
+
+    </wsdl:message>
+    <wsdl:message name="powerSwitchNotConfiguredFault">
+    	<wsdl:part name="powerSwitchNotConfiguredFault" element="powerswitch:powerSwitchNotConfiguredError">
+    	</wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPowerSwitchByIdRequest">
+    	<wsdl:part name="parameters"
+    		element="powerswitch:getPowerSwitchByIdRequest">
+    	</wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getPowerSwitchByIdResponse">
+    	<wsdl:part name="parameters"
+    		element="powerswitch:getPowerSwitchByIdResponse">
+    	</wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="setAllSwitchesStateRequest">
+
+        <wsdl:part name="parameters"
+        	element="powerswitch:setAllSwitchesStateRequest">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="setAllSwitchesStateResponse">
+
+    </wsdl:message>
+    <wsdl:message name="setAllPowerSwitchStateFault">
+    	<wsdl:part name="powerSwitchNotConfiguredFault" element="powerswitch:powerSwitchNotConfiguredError"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="PowerSwitchBoxSOAPService">
+    	<wsdl:operation name="getAllPowerSwitches">
+            <wsdl:input message="powerswitch:getAllPowerSwitchesRequest"></wsdl:input>
+            <wsdl:output message="powerswitch:getAllPowerSwitchesResponse" name="getAllPowerSwitchesResponse"></wsdl:output>
+            <wsdl:fault name="switchNotConfiguredFault" message="powerswitch:powerSwitchNotConfiguredFault"></wsdl:fault>
+        </wsdl:operation>
+    	<wsdl:operation name="setState">
+    		<wsdl:input message="powerswitch:setStateRequest"></wsdl:input>
+    		<wsdl:output message="powerswitch:setStateResponse"></wsdl:output>
+            <wsdl:fault name="switchNotConfiguredFault" message="powerswitch:powerSwitchNotConfiguredFault"></wsdl:fault>
+        </wsdl:operation>
+    	<wsdl:operation name="getPowerSwitchById">
+    		<wsdl:input message="powerswitch:getPowerSwitchByIdRequest"></wsdl:input>
+    		<wsdl:output message="powerswitch:getPowerSwitchByIdResponse"></wsdl:output>
+            <wsdl:fault name="switchNotConfiguredFault" message="powerswitch:powerSwitchNotConfiguredFault"></wsdl:fault>
+        </wsdl:operation>
+    	<wsdl:operation name="setAllSwitchesState">
+    		<wsdl:input message="powerswitch:setAllSwitchesStateRequest" name="setAllSwitchesStateRequest"></wsdl:input>
+    		<wsdl:output message="powerswitch:setAllSwitchesStateResponse"></wsdl:output>
+            <wsdl:fault name="powerSwitchNotConfiguredFault" message="powerswitch:powerSwitchNotConfiguredFault"></wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="PowerSwitchBoxServiceBindings"
+    	type="powerswitch:PowerSwitchBoxSOAPService">
+    	<soap:binding style="document"
+    		transport="http://schemas.xmlsoap.org/soap/http" />
+    	<wsdl:operation name="getAllPowerSwitches">
+    		<wsdl:input></wsdl:input>
+    		<wsdl:output name="getAllPowerSwitchesResponse"></wsdl:output>
+    		<wsdl:fault name="switchNotConfiguredFault"></wsdl:fault>
+    	</wsdl:operation>
+    	<wsdl:operation name="setState">
+    		<wsdl:input></wsdl:input>
+    		<wsdl:output></wsdl:output>
+    		<wsdl:fault name="switchNotConfiguredFault"></wsdl:fault>
+    	</wsdl:operation>
+    	<wsdl:operation name="getPowerSwitchById">
+    		<wsdl:input></wsdl:input>
+    		<wsdl:output></wsdl:output>
+    		<wsdl:fault name="switchNotConfiguredFault"></wsdl:fault>
+    	</wsdl:operation>
+    	<wsdl:operation name="setAllSwitchesState">
+    		<wsdl:input name="setAllSwitchesStateRequest"></wsdl:input>
+    		<wsdl:output></wsdl:output>
+    		<wsdl:fault name="powerSwitchNotConfiguredFault"></wsdl:fault>
+    	</wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="PowerSwitchBoxService">
+		<wsdl:port name="PowerSwitchBoxServicePortType" binding="powerswitch:PowerSwitchBoxServiceBindings">
+			<soap:address location="http://service.iot.com/powerswitch" />
+		</wsdl:port>
+    </wsdl:service>
+    </wsdl:definitions>

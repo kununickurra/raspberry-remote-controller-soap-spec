@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:powerswitch="http://service.iot.com/powerswitch" targetNamespace="http://service.iot.com/powerswitch" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="PowerSwitchType">
+		<xs:sequence>
+			<xs:element name="id" type="xs:int"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="status" type="powerswitch:SwitchState"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SwitchState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ON"/>
+			<xs:enumeration value="OFF"/>
+		</xs:restriction>
+	</xs:simpleType>
+    <xs:simpleType name="SystemFaultType">
+    	<xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="BusinessExceptionType">
+    	<xs:sequence>
+    		<xs:element name="code" type="xs:string"></xs:element>
+    		<xs:element name="message" type="xs:string"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+	<xs:element name="getAllPowerSwitchesResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SwitchesTypes" type="powerswitch:PowerSwitchType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="getPowerSwitchByIdRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:int"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="getPowerSwitchByIdResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SwitchType" type="powerswitch:PowerSwitchType" minOccurs="0" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="setAllSwitchesStateRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="switchState" type="powerswitch:SwitchState"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="setSwitchStateRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="xs:int"/>
+				<xs:element name="status" type="powerswitch:SwitchState"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+    <xs:element name="powerSwitchNotConfiguredError" type="powerswitch:BusinessExceptionType"/>	
+	
+</xs:schema>
